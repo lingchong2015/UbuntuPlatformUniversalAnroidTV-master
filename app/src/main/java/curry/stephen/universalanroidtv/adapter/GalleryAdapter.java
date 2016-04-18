@@ -2,12 +2,15 @@ package curry.stephen.universalanroidtv.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -107,6 +110,14 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 //                    int position = (int) holder.itemView.getTag();
                     mOnItemSelectListener.onItemSelect(holder.itemView, holder.getLayoutPosition());
                 }
+
+                int animationType = hasFocus ? R.anim.enlarge : R.anim.decrease;
+                Animation mAnimation = AnimationUtils.loadAnimation(mContext, animationType);
+                mAnimation.setBackgroundColor(Color.TRANSPARENT);
+                mAnimation.setFillAfter(hasFocus);
+                v.startAnimation(mAnimation);
+                mAnimation.start();
+//                v.bringToFront();
             }
         });
 

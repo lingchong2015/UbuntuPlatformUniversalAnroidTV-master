@@ -1,13 +1,18 @@
 package curry.stephen.universalanroidtv.view;
 
+import android.graphics.Color;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,6 +32,8 @@ public class BrowserFragment extends Fragment {
     private GalleryAdapter mAdapter;//RecyclerView适配器.
 //    private List<Integer> mTestDataList;//数据源.
     private int mIndex;
+
+    private static final String TAG = BrowserFragment.class.getSimpleName();
 
     public int getIndex() {
         return mIndex;
@@ -111,7 +118,11 @@ public class BrowserFragment extends Fragment {
     }
 
     public void setFocus() {
-        mRecyclerView.getChildAt(0).requestFocus();
+        try {
+            mRecyclerView.getChildAt(0).requestFocus();
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
     }
 
 //    private void initTestDataList() {
