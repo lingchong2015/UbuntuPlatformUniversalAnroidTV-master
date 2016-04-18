@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.UUID;
 
 import curry.stephen.universalanroidtv.R;
-import curry.stephen.universalanroidtv.adapter.MainActivityAdapter;
 import curry.stephen.universalanroidtv.global.GlobalVariables;
 import curry.stephen.universalanroidtv.model.MediaItemModel;
 import curry.stephen.universalanroidtv.model.TabDataModel;
@@ -36,9 +35,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private ViewPager mViewPager;
     private RadioButton localService;
 
-    private HashMap<String, Fragment> mHashMapFragment = new HashMap<>();
-    private View mViews[];
+    private HashMap<Integer, Fragment> mHashMapFragment = new HashMap<>();
+    private List<RadioButton> mRadioButtonList = new ArrayList<>();
     private int mCurrentIndex = 0;
+    private Fragment mCurrentFragment;
+    private FragmentManager mFragmentManager;
 
     private static final int SINGLE_TAB_WIDTH = 290;
     private static final int SINGLE_TAB_HEIGHT = 70;
@@ -60,17 +61,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void initView() {
-        initTitleTab();
+        initTab();
 
         initFragment();
 //        initViewPager();
 
 //        localService = (RadioButton) findViewById(R.id.main_title_local);
 //        localService.setSelected(true);
-//        mViews = new View[]{localService};
+//        mRadioButtonList = new View[]{localService};
     }
 
-    private FragmentManager mFragmentManager;
     private void initFragment() {
         mFragmentManager = getSupportFragmentManager();
 
@@ -78,13 +78,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             return;
         }
 
-        changeFragment(mHashMapFragment.get("0"));
+        mRadioButtonList.get(0).setSelected(true);
+        changeFragment(mHashMapFragment.get(0));
     }
 
     private void changeFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.browser_fragment_container, fragment);
         fragmentTransaction.commit();
+
+        mCurrentFragment = fragment;
     }
 
     private void setListener() {
@@ -152,48 +155,67 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        boolean focusFlag = false;
-//        for (View v : mViews) {
-//            if (v.isFocused()) {
-//                focusFlag = true;
-//            }
-//        }
-//        if (focusFlag) {
-//            if (KeyEvent.KEYCODE_DPAD_LEFT == keyCode) {
-//                if (mCurrentIndex > 0) {
-//                    mViews[--mCurrentIndex].requestFocus();
-//                }
-//                return true;
-//            } else if (KeyEvent.KEYCODE_DPAD_RIGHT == keyCode) {
-//                if (mCurrentIndex < 2) {
-//                    mViews[++mCurrentIndex].requestFocus();
-//                }
-//                return true;
-//            }
-//
-//            if (KeyEvent.KEYCODE_DPAD_DOWN == keyCode) {
-//                ((BrowserFragment)  mHashMapFragment.get(0)).setFocus();
-//            }
-//        }
-//
-//        if (KeyEvent.KEYCODE_DPAD_DOWN == keyCode) {
-//            ((BrowserFragment)  mHashMapFragment.get(0)).setFocus();
-//        }
-//
-//        if (KeyEvent.KEYCODE_BACK == keyCode) {
-//            return true;
-//        }
+        boolean isRadioButtonFocused = false;
+        int indexSelectedRadioButton = 0;
+        for (RadioButton radioButton : mRadioButtonList) {
+            if (radioButton.isFocused()) {
+                isRadioButtonFocused = true;
+                break;
+            }
+            ++indexSelectedRadioButton;
+        }
+
+        if (isRadioButtonFocused) {
+            if (KeyEvent.KEYCODE_DPAD_LEFT == keyCode) {
+                if (Integer.valueOf(String.valueOf(
+                        mRadioButtonList.get(indexSelectedRadioButton).getTag())) == 0) {
+                    return true;
+                }
+
+                mRadioButtonList.get(indexSelectedRadioButton).setSelected(false);
+                mRadioButtonList.get(indexSelectedRadioButton - 1).setSelected(true);
+                mRadioButtonList.get(indexSelectedRadioButton - 1).requestFocus();
+
+                changeFragment(mHashMapFragment.get(indexSelectedRadioButton - 1));
+                return true;
+            } else if (KeyEvent.KEYCODE_DPAD_RIGHT == keyCode) {
+                if (Integer.valueOf(String.valueOf(mRadioButtonList.get(
+                        indexSelectedRadioButton).getTag())) == (mRadioButtonList.size() - 1)) {
+                    return true;
+                }
+
+                mRadioButtonList.get(indexSelectedRadioButton).setSelected(false);
+                mRadioButtonList.get(indexSelectedRadioButton + 1).setSelected(true);
+                mRadioButtonList.get(indexSelectedRadioButton + 1).requestFocus();
+
+                changeFragment(mHashMapFragment.get(indexSelectedRadioButton + 1));
+                return true;
+            }
+        }
+
+        if (KeyEvent.KEYCODE_DPAD_UP == keyCode) {
+            mRadioButtonList.get(((BrowserFragment) mCurrentFragment).getIndex()).setSelected(true);
+            mRadioButtonList.get(((BrowserFragment) mCurrentFragment).getIndex()).requestFocus();
+            return true;
+        } else if (KeyEvent.KEYCODE_DPAD_DOWN == keyCode) {
+            mRadioButtonList.get(((BrowserFragment) mCurrentFragment).getIndex()).setSelected(false);
+
+            ((BrowserFragment) mCurrentFragment).setFocus();
+            return true;
+        } else if (KeyEvent.KEYCODE_BACK == keyCode) {
+            return true;
+        }
 
         return super.onKeyDown(keyCode, event);
     }
 
-    private Uri getDrawableUri(int id) {
+    private Uri getLocalDrawableUri(int id) {
         return Uri.parse(String.format("%s://%s/%s/%s", ContentResolver.SCHEME_ANDROID_RESOURCE,
                 getResources().getResourcePackageName(id),
                 getResources().getResourceTypeName(id), getResources().getResourceEntryName(id)));
     }
 
-    private void initTitleTab() {
+    private void initTab() {
         if (GlobalVariables.globalTabDataModelList.isEmpty()) {
             Toast.makeText(this, String.format("没有任何节目信息！"), Toast.LENGTH_LONG);
             return;
@@ -202,10 +224,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         RadioGroup radioGroupTitle = (RadioGroup) findViewById(R.id.radio_group_main);
         RadioGroup.LayoutParams layoutParamsRadioGroup = new RadioGroup.LayoutParams(
                 SINGLE_TAB_WIDTH, SINGLE_TAB_HEIGHT);
+        int index = 0;
         for (TabDataModel tabDataModel : GlobalVariables.globalTabDataModelList) {
             final RadioButton radioButton = (RadioButton) getLayoutInflater().from(this).inflate(
                     R.layout.radio_button_tab, null);
-            radioButton.setTag(tabDataModel.getID());
+            radioButton.setTag(index);
             radioButton.setLayoutParams(layoutParamsRadioGroup);
             radioButton.setFocusable(true);
             radioButton.setOnClickListener(new View.OnClickListener() {
@@ -237,18 +260,24 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             radioGroupTitle.addView(radioButton);
 
-            initBrowserFragment(tabDataModel.getID(), tabDataModel.getMediaItemModelList());
+            mRadioButtonList.add(radioButton);
+
+            initBrowserFragment(index, tabDataModel.getMediaItemModelList());
+
+            ++index;
         }
     }
 
-    private void initBrowserFragment(int tabID, List<MediaItemModel> mediaItemModelList) {
+    private void initBrowserFragment(int index, List<MediaItemModel> mediaItemModelList) {
 //        mHashMapFragment.clear();
 
 //        BrowserFragment browserFragment = new BrowserFragment();
         BrowserFragment browserFragment = BrowserFragment.newInstance(
                 (ArrayList<MediaItemModel>) mediaItemModelList);
 
-        mHashMapFragment.put(String.valueOf(tabID), browserFragment);
+        browserFragment.setIndex(index);
+
+        mHashMapFragment.put(index, browserFragment);
 
 //        mHashMapFragment.clear();//清空
 
@@ -297,35 +326,35 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 .id(0)
                 .tabID(0)
                 .identifier(UUID.randomUUID())
-                .picture(getDrawableUri(R.mipmap.wlds_hk))
+                .picture(getLocalDrawableUri(R.mipmap.wlds_hk))
                 .build();
 
         MediaItemModel mediaItemModel2 = new MediaItemModel.Builder()
                 .id(1)
                 .tabID(0)
                 .identifier(UUID.randomUUID())
-                .picture(getDrawableUri(R.mipmap.wlds_y1))
+                .picture(getLocalDrawableUri(R.mipmap.wlds_y1))
                 .build();
 
         MediaItemModel mediaItemModel3 = new MediaItemModel.Builder()
                 .id(2)
                 .tabID(0)
                 .identifier(UUID.randomUUID())
-                .picture(getDrawableUri(R.mipmap.wlds_y2))
+                .picture(getLocalDrawableUri(R.mipmap.wlds_y2))
                 .build();
 
         MediaItemModel mediaItemModel4 = new MediaItemModel.Builder()
                 .id(3)
                 .tabID(0)
                 .identifier(UUID.randomUUID())
-                .picture(getDrawableUri(R.mipmap.wlds_y3))
+                .picture(getLocalDrawableUri(R.mipmap.wlds_y3))
                 .build();
 
         MediaItemModel mediaItemModel5 = new MediaItemModel.Builder()
                 .id(4)
                 .tabID(0)
                 .identifier(UUID.randomUUID())
-                .picture(getDrawableUri(R.mipmap.wlds_y4))
+                .picture(getLocalDrawableUri(R.mipmap.wlds_y4))
                 .build();
 
         List<MediaItemModel> mediaItemModelList1 = new ArrayList<>();
@@ -339,21 +368,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 .id(0)
                 .tabID(1)
                 .identifier(UUID.randomUUID())
-                .picture(getDrawableUri(R.mipmap.wlds_hk))
+                .picture(getLocalDrawableUri(R.mipmap.wlds_hk))
                 .build();
 
         MediaItemModel mediaItemModel7 = new MediaItemModel.Builder()
                 .id(1)
                 .tabID(1)
                 .identifier(UUID.randomUUID())
-                .picture(getDrawableUri(R.mipmap.wlds_y1))
+                .picture(getLocalDrawableUri(R.mipmap.wlds_y1))
                 .build();
 
         MediaItemModel mediaItemModel8 = new MediaItemModel.Builder()
                 .id(2)
                 .tabID(1)
                 .identifier(UUID.randomUUID())
-                .picture(getDrawableUri(R.mipmap.wlds_y2))
+                .picture(getLocalDrawableUri(R.mipmap.wlds_y2))
                 .build();
 
         List<MediaItemModel> mediaItemModelList2 = new ArrayList<>();
@@ -363,15 +392,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         TabDataModel tabDataModel1 = new TabDataModel.Builder()
                 .id(0)
-                .picureNormal(getDrawableUri(R.drawable.title_local_service))
-                .pictureSelected(getDrawableUri(R.drawable.title_local_service_focus))
+                .picureNormal(getLocalDrawableUri(R.drawable.title_local_service))
+                .pictureSelected(getLocalDrawableUri(R.drawable.title_local_service_focus))
                 .mediaItemModelList(mediaItemModelList1)
                 .build();
 
         TabDataModel tabDataModel2 = new TabDataModel.Builder()
                 .id(1)
-                .picureNormal(getDrawableUri(R.mipmap.wangluodianshi_1))
-                .pictureSelected(getDrawableUri(R.mipmap.wangluodianshi_2))
+                .picureNormal(getLocalDrawableUri(R.mipmap.wangluodianshi_1))
+                .pictureSelected(getLocalDrawableUri(R.mipmap.wangluodianshi_2))
                 .mediaItemModelList(mediaItemModelList2)
                 .build();
 

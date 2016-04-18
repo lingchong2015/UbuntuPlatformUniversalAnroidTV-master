@@ -26,6 +26,19 @@ public class BrowserFragment extends Fragment {
     private MyRecyclerView mRecyclerView;//自定义RecyclerView.
     private GalleryAdapter mAdapter;//RecyclerView适配器.
 //    private List<Integer> mTestDataList;//数据源.
+    private int mIndex;
+
+    public int getIndex() {
+        return mIndex;
+    }
+
+    public void setIndex(int index) {
+        mIndex = index;
+    }
+
+    public void setInitFocus() {
+        mRecyclerView.getChildAt(0).requestFocus();
+    }
 
     public static final String MEDIA_ITEM_MODEL_LIST = "BrowserFragmentMediaItemModelList";
 
