@@ -9,10 +9,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.RadioButton;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -32,12 +32,8 @@ import curry.stephen.universalanroidtv.model.TabDataModel;
  */
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
-    private ViewPager mViewPager;
-    private RadioButton localService;
-
     private HashMap<Integer, Fragment> mHashMapFragment = new HashMap<>();
-    private List<RadioButton> mRadioButtonList = new ArrayList<>();
-    private int mCurrentIndex = 0;
+    private List<ImageButton> mImageButtonList = new ArrayList<>();
     private Fragment mCurrentFragment;
     private FragmentManager mFragmentManager;
 
@@ -54,21 +50,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         generateTestCase();
 
         initView();
-
-//        setListener();
-
-//        initBrowserFragment();
     }
 
     private void initView() {
         initTab();
 
         initFragment();
-//        initViewPager();
-
-//        localService = (RadioButton) findViewById(R.id.main_title_local);
-//        localService.setSelected(true);
-//        mRadioButtonList = new View[]{localService};
     }
 
     private void initFragment() {
@@ -78,7 +65,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             return;
         }
 
-        mRadioButtonList.get(0).setSelected(true);
+        mImageButtonList.get(0).setSelected(true);
         changeFragment(mHashMapFragment.get(0));
     }
 
@@ -88,54 +75,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         fragmentTransaction.commit();
 
         mCurrentFragment = fragment;
-    }
-
-    private void setListener() {
-//        localService.setOnClickListener(this);
-//
-//        localService.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (hasFocus) {
-//                    mViewPager.setCurrentItem(0);
-//                }
-//            }
-//        });
-//        setting.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (hasFocus) {
-//                    mViewPager.setCurrentItem(1);
-//                }
-//            }
-//        });
-//        app.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (hasFocus) {
-//                    mViewPager.setCurrentItem(2);
-//                }
-//            }
-//        });
-    }
-
-    private void initViewPager() {
-//        mViewPager = (ViewPager) findViewById(R.id.main_viewpager);
-//
-//        mViewPager.setAdapter(new MainActivityAdapter(getSupportFragmentManager(), mHashMapFragment));
-//        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                mViewPager.setCurrentItem(position);
-//                switch (position) {
-//                    case 0:
-//                        localService.setSelected(true);
-//                        break;
-//                }
-//            }
-//        });
-//        mViewPager.setCurrentItem(1);
+        ((BrowserFragment) mCurrentFragment).setNeedToMoveInitPoistion(true);
     }
 
     @Override
@@ -155,51 +95,50 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        boolean isRadioButtonFocused = false;
+        boolean isImageButtonFocused = false;
         int indexSelectedRadioButton = 0;
-        for (RadioButton radioButton : mRadioButtonList) {
-            if (radioButton.isFocused()) {
-                isRadioButtonFocused = true;
+        for (ImageButton imageButton : mImageButtonList) {
+            if (imageButton.isFocused()) {
+                isImageButtonFocused = true;
                 break;
             }
             ++indexSelectedRadioButton;
         }
 
-        if (isRadioButtonFocused) {
+        if (isImageButtonFocused) {
             if (KeyEvent.KEYCODE_DPAD_LEFT == keyCode) {
                 if (Integer.valueOf(String.valueOf(
-                        mRadioButtonList.get(indexSelectedRadioButton).getTag())) == 0) {
+                        mImageButtonList.get(indexSelectedRadioButton).getTag())) == 0) {
                     return true;
                 }
 
-                mRadioButtonList.get(indexSelectedRadioButton).setSelected(false);
-                mRadioButtonList.get(indexSelectedRadioButton - 1).setSelected(true);
-                mRadioButtonList.get(indexSelectedRadioButton - 1).requestFocus();
+                mImageButtonList.get(indexSelectedRadioButton).setSelected(false);
 
                 changeFragment(mHashMapFragment.get(indexSelectedRadioButton - 1));
+                mImageButtonList.get(((BrowserFragment) mCurrentFragment).getIndex()).setSelected(true);
+                mImageButtonList.get(((BrowserFragment) mCurrentFragment).getIndex()).requestFocus();
                 return true;
             } else if (KeyEvent.KEYCODE_DPAD_RIGHT == keyCode) {
-                if (Integer.valueOf(String.valueOf(mRadioButtonList.get(
-                        indexSelectedRadioButton).getTag())) == (mRadioButtonList.size() - 1)) {
+                if (Integer.valueOf(String.valueOf(mImageButtonList.get(
+                        indexSelectedRadioButton).getTag())) == (mImageButtonList.size() - 1)) {
                     return true;
                 }
 
-                mRadioButtonList.get(indexSelectedRadioButton).setSelected(false);
-                mRadioButtonList.get(indexSelectedRadioButton + 1).setSelected(true);
-                mRadioButtonList.get(indexSelectedRadioButton + 1).requestFocus();
+                mImageButtonList.get(indexSelectedRadioButton).setSelected(false);
 
                 changeFragment(mHashMapFragment.get(indexSelectedRadioButton + 1));
+                mImageButtonList.get(((BrowserFragment) mCurrentFragment).getIndex()).setSelected(true);
+                mImageButtonList.get(((BrowserFragment) mCurrentFragment).getIndex()).requestFocus();
                 return true;
             }
         }
 
         if (KeyEvent.KEYCODE_DPAD_UP == keyCode) {
-            mRadioButtonList.get(((BrowserFragment) mCurrentFragment).getIndex()).setSelected(true);
-            mRadioButtonList.get(((BrowserFragment) mCurrentFragment).getIndex()).requestFocus();
+            mImageButtonList.get(((BrowserFragment) mCurrentFragment).getIndex()).setSelected(true);
+            mImageButtonList.get(((BrowserFragment) mCurrentFragment).getIndex()).requestFocus();
             return true;
         } else if (KeyEvent.KEYCODE_DPAD_DOWN == keyCode) {
-            mRadioButtonList.get(((BrowserFragment) mCurrentFragment).getIndex()).setSelected(false);
-
+            mImageButtonList.get(((BrowserFragment) mCurrentFragment).getIndex()).setSelected(false);
             ((BrowserFragment) mCurrentFragment).setFocus();
             return true;
         } else if (KeyEvent.KEYCODE_BACK == keyCode) {
@@ -221,20 +160,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             return;
         }
 
-        RadioGroup radioGroupTitle = (RadioGroup) findViewById(R.id.radio_group_main);
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear_layout_title);
         RadioGroup.LayoutParams layoutParamsRadioGroup = new RadioGroup.LayoutParams(
                 SINGLE_TAB_WIDTH, SINGLE_TAB_HEIGHT);
         int index = 0;
         for (TabDataModel tabDataModel : GlobalVariables.globalTabDataModelList) {
-            final RadioButton radioButton = (RadioButton) getLayoutInflater().from(this).inflate(
+            final ImageButton imageButton = (ImageButton) getLayoutInflater().from(this).inflate(
                     R.layout.radio_button_tab, null);
-            radioButton.setTag(index);
-            radioButton.setLayoutParams(layoutParamsRadioGroup);
-            radioButton.setFocusable(true);
-            radioButton.setOnClickListener(new View.OnClickListener() {
+            imageButton.setTag(index);
+            imageButton.setLayoutParams(layoutParamsRadioGroup);
+            imageButton.setFocusable(true);
+            imageButton.setFocusableInTouchMode(true);
+            imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    radioButton.requestFocus();
+                    imageButton.requestFocus();
                 }
             });
 
@@ -253,14 +193,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         drawableSelected);
                 stateListDrawable.addState(new int[]{}, drawableNormal);
 
-                radioButton.setBackground(stateListDrawable);
+                imageButton.setBackground(stateListDrawable);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
 
-            radioGroupTitle.addView(radioButton);
+            linearLayout.addView(imageButton);
 
-            mRadioButtonList.add(radioButton);
+            mImageButtonList.add(imageButton);
 
             initBrowserFragment(index, tabDataModel.getMediaItemModelList());
 
@@ -269,54 +209,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void initBrowserFragment(int index, List<MediaItemModel> mediaItemModelList) {
-//        mHashMapFragment.clear();
-
-//        BrowserFragment browserFragment = new BrowserFragment();
         BrowserFragment browserFragment = BrowserFragment.newInstance(
                 (ArrayList<MediaItemModel>) mediaItemModelList);
 
         browserFragment.setIndex(index);
 
         mHashMapFragment.put(index, browserFragment);
-
-//        mHashMapFragment.clear();//清空
-
-//        LocalServiceFragment interactTV = new LocalServiceFragment();//本地服务Fragment.
-//        SettingFragment setting = new SettingFragment();
-//        AppFragment app = new AppFragment();
-//
-//        mHashMapFragment.add(interactTV);
-//        mHashMapFragment.add(setting);
-//        mHashMapFragment.add(app);
-//
-//        MainActivityAdapter mAdapter = new MainActivityAdapter(getSupportFragmentManager(),
-//                mHashMapFragment);
-//        mViewPager.setAdapter(mAdapter);
-//        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                mViewPager.setCurrentItem(position);
-//                switch (position) {
-//                    case 0:
-//                        localService.setSelected(true);
-//                        MainActivity.this.setting.setSelected(false);
-//                        MainActivity.this.app.setSelected(false);
-//                        break;
-//                    case 1:
-//                        localService.setSelected(false);
-//                        MainActivity.this.setting.setSelected(true);
-//                        MainActivity.this.app.setSelected(false);
-//                        break;
-//                    case 2:
-//                        localService.setSelected(false);
-//                        MainActivity.this.setting.setSelected(false);
-//                        MainActivity.this.app.setSelected(true);
-//                        break;
-//                }
-//            }
-//        });
-//        mViewPager.setCurrentItem(0);
     }
 
     private void generateTestCase() {

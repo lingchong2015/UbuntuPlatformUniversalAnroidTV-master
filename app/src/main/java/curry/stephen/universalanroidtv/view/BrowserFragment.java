@@ -1,7 +1,5 @@
 package curry.stephen.universalanroidtv.view;
 
-import android.graphics.Color;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,12 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import curry.stephen.universalanroidtv.R;
@@ -30,8 +24,12 @@ public class BrowserFragment extends Fragment {
 
     private MyRecyclerView mRecyclerView;//自定义RecyclerView.
     private GalleryAdapter mAdapter;//RecyclerView适配器.
-//    private List<Integer> mTestDataList;//数据源.
     private int mIndex;
+    private boolean mNeedToMoveInitPoistion = false;
+
+    public void setNeedToMoveInitPoistion(boolean needToMoveInitPoistion) {
+        mNeedToMoveInitPoistion = needToMoveInitPoistion;
+    }
 
     private static final String TAG = BrowserFragment.class.getSimpleName();
 
@@ -43,9 +41,6 @@ public class BrowserFragment extends Fragment {
         mIndex = index;
     }
 
-    public void setInitFocus() {
-        mRecyclerView.getChildAt(0).requestFocus();
-    }
 
     public static final String MEDIA_ITEM_MODEL_LIST = "BrowserFragmentMediaItemModelList";
 
@@ -66,8 +61,6 @@ public class BrowserFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_browser, container, false);
 
-//        initTestDataList();
-
         //获取RecyclerView对象, 设置布局管理器, 设置RecyclerView动画.
         mRecyclerView = (MyRecyclerView) view.findViewById(R.id.id_recyclerview_horizontal);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -83,18 +76,16 @@ public class BrowserFragment extends Fragment {
         mAdapter.setOnItemClickListener(new GalleryAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                mRecyclerView.checkAutoAdjust(position);
-//                mRecyclerView.smoothToCenter(position);//当单击Item时, 将该Item置于中间位置.
             }
 
             @Override
             public void onItemLongClick(View view, int position) {
             }
         });
+
         mAdapter.setOnItemSelectListener(new GalleryAdapter.OnItemSelectListener() {
             @Override
             public void onItemSelect(View view, int position) {
-//                linearLayoutManager.scrollToPositionWithOffset(position,350);
                 mRecyclerView.smoothToCenter(position);
             }
         });
@@ -112,21 +103,32 @@ public class BrowserFragment extends Fragment {
             }
         });
 
-        mRecyclerView.requestFocus();
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mNeedToMoveInitPoistion) {
+            moveToInitPosition();
+            mNeedToMoveInitPoistion = false;
+        }
     }
 
     public void setFocus() {
         try {
-            mRecyclerView.getChildAt(0).requestFocus();
+            if (mRecyclerView.getChildAt(0) != null) {
+                mRecyclerView.getChildAt(0).requestFocus();
+            } else {
+                moveToInitPosition();
+            }
         } catch (Exception e) {
             Log.e(TAG, e.toString());
         }
     }
 
-//    private void initTestDataList() {
-//        mTestDataList = new ArrayList<>(Arrays.asList(R.mipmap.ic_launcher, R.mipmap.ic_launcher,
-//                R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher));
-//    }
+    public void moveToInitPosition() {
+        mRecyclerView.scrollToPosition(0);
+    }
 }
