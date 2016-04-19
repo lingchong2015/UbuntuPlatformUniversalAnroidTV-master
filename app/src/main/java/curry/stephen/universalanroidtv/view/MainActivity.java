@@ -75,7 +75,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         fragmentTransaction.commit();
 
         mCurrentFragment = fragment;
-        ((BrowserFragment) mCurrentFragment).setNeedToMoveInitPoistion(true);
+        ((BrowserFragment) mCurrentFragment).setNeedToMoveInitPosition(true);
     }
 
     @Override

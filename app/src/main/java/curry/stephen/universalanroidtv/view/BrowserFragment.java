@@ -25,10 +25,10 @@ public class BrowserFragment extends Fragment {
     private MyRecyclerView mRecyclerView;//自定义RecyclerView.
     private GalleryAdapter mAdapter;//RecyclerView适配器.
     private int mIndex;
-    private boolean mNeedToMoveInitPoistion = false;
+    private boolean mNeedToMoveInitPosition = false;
 
-    public void setNeedToMoveInitPoistion(boolean needToMoveInitPoistion) {
-        mNeedToMoveInitPoistion = needToMoveInitPoistion;
+    public void setNeedToMoveInitPosition(boolean needToMoveInitPosition) {
+        mNeedToMoveInitPosition = needToMoveInitPosition;
     }
 
     private static final String TAG = BrowserFragment.class.getSimpleName();
@@ -110,9 +110,9 @@ public class BrowserFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if (mNeedToMoveInitPoistion) {
+        if (mNeedToMoveInitPosition) {
             moveToInitPosition();
-            mNeedToMoveInitPoistion = false;
+            mNeedToMoveInitPosition = false;
         }
     }
 
