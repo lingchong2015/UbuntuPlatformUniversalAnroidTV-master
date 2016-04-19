@@ -30,7 +30,7 @@ import curry.stephen.universalanroidtv.model.TabDataModel;
 /**
  * Created by LingChong on 2016/4/11 0011.
  */
-public class MainActivity extends FragmentActivity implements View.OnClickListener {
+public class MainActivity extends FragmentActivity {
 
     private HashMap<Integer, Fragment> mHashMapFragment = new HashMap<>();
     private List<ImageButton> mImageButtonList = new ArrayList<>();
@@ -76,21 +76,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         mCurrentFragment = fragment;
         ((BrowserFragment) mCurrentFragment).setNeedToMoveInitPosition(true);
-    }
-
-    @Override
-    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.main_title_local:
-//                mViewPager.setCurrentItem(0);
-//                break;
-//            case R.id.main_title_setting:
-//                mViewPager.setCurrentItem(1);
-//                break;
-//            case R.id.main_title_app:
-//                mViewPager.setCurrentItem(2);
-//                break;
-//        }
     }
 
     @Override
