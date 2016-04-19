@@ -26,12 +26,14 @@ public class BrowserFragment extends Fragment {
     private GalleryAdapter mAdapter;//RecyclerView适配器.
     private int mIndex;
     private boolean mNeedToMoveInitPosition = false;
+    List<MediaItemModel> mMediaItemModelList;
+
+    public static final String MEDIA_ITEM_MODEL_LIST = "BrowserFragmentMediaItemModelList";
+    private static final String TAG = BrowserFragment.class.getSimpleName();
 
     public void setNeedToMoveInitPosition(boolean needToMoveInitPosition) {
         mNeedToMoveInitPosition = needToMoveInitPosition;
     }
-
-    private static final String TAG = BrowserFragment.class.getSimpleName();
 
     public int getIndex() {
         return mIndex;
@@ -40,9 +42,6 @@ public class BrowserFragment extends Fragment {
     public void setIndex(int index) {
         mIndex = index;
     }
-
-
-    public static final String MEDIA_ITEM_MODEL_LIST = "BrowserFragmentMediaItemModelList";
 
     public static BrowserFragment newInstance(ArrayList<MediaItemModel> mediaItemModelList) {
         Bundle bundle = new Bundle();
@@ -57,7 +56,7 @@ public class BrowserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        List<MediaItemModel> mediaItemModelList = (List<MediaItemModel>) getArguments().getSerializable(MEDIA_ITEM_MODEL_LIST);
+        mMediaItemModelList = (List<MediaItemModel>) getArguments().getSerializable(MEDIA_ITEM_MODEL_LIST);
 
         View view = inflater.inflate(R.layout.fragment_browser, container, false);
 
@@ -69,7 +68,7 @@ public class BrowserFragment extends Fragment {
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
         //初始化与设置RecyclerView的适配器.
-        mAdapter = new GalleryAdapter(getActivity(), mediaItemModelList);
+        mAdapter = new GalleryAdapter(getActivity(), mMediaItemModelList);
         mRecyclerView.setAdapter(mAdapter);
 
         //设置适配器的监听事件, 这里需要监听单击事件与选中事件.
