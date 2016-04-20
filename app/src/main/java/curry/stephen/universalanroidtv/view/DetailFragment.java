@@ -1,5 +1,6 @@
 package curry.stephen.universalanroidtv.view;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,11 +36,11 @@ public class DetailFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        MediaItemModel mediaItemModel = getArguments().getParcelable(
+        final MediaItemModel mediaItemModel = getArguments().getParcelable(
                 DETAIL_FRAGMENT_MEDIA_ITEM_MODEL);
 
         ImageView imageViewLogo = (ImageView) view.findViewById(R.id.image_view_logo);
@@ -62,7 +63,10 @@ public class DetailFragment extends Fragment {
         imageButtonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String videoPath = mediaItemModel.getVideoPath().toString();
+                Intent intent = new Intent(getActivity(), PlaybackActivity.class);
+                intent.putExtra(PlaybackFragment.EXTRA_VIDEO_PATH, videoPath);
+                startActivity(intent);
             }
         });
 
