@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">UniversalAnroidTV</string>
+    <string name="detail_view_director">导演：香港卫视国际传媒集团</string>
+    <string name="detail_view_actor">演员：高洪星 薛建华 张海勇等</string>
+    <string name="detail_view_content">内容简介：香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的
+        商业注册，2010年9月初试播...内容简介：香港卫视于2008年12月19日在香港完成香港...</string>
+    <string name="hkstv">rtmp://live.hkstv.hk.lxdns.com/live/hks</string>
 </resources>

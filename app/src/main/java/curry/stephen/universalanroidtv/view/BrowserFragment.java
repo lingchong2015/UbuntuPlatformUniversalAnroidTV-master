@@ -1,5 +1,6 @@
 package curry.stephen.universalanroidtv.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -75,6 +76,10 @@ public class BrowserFragment extends Fragment {
         mAdapter.setOnItemClickListener(new GalleryAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra(DetailFragment.DETAIL_FRAGMENT_MEDIA_ITEM_MODEL,
+                        mMediaItemModelList.get(position));
+                startActivity(intent);
             }
 
             @Override
