@@ -1,6 +1,8 @@
 package curry.stephen.universalanroidtv.model;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -8,7 +10,7 @@ import java.util.UUID;
 /**
  * Created by LingChong on 2016/4/11 0011.
  */
-public class MediaItemModel implements Serializable {
+public class MediaItemModel implements Parcelable {
 
     private int mID;
     private int mTabID;
@@ -124,8 +126,7 @@ public class MediaItemModel implements Serializable {
         mInterestingCount = interestingCount;
     }
 
-
-    public static class Builder implements Serializable {
+    public static class Builder {
 
         private int mID;
         private int mTabID;
@@ -197,4 +198,50 @@ public class MediaItemModel implements Serializable {
             return this;
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.mID);
+        dest.writeInt(this.mTabID);
+        dest.writeSerializable(this.mIdentifier);
+        dest.writeParcelable(this.mPicture, flags);
+        dest.writeParcelable(this.mThumbnail, flags);
+        dest.writeParcelable(this.mVideoPath, flags);
+        dest.writeString(this.mTitle);
+        dest.writeString(this.mDirector);
+        dest.writeString(this.mActor);
+        dest.writeString(this.mContent);
+        dest.writeInt(this.mInterestingCount);
+    }
+
+    protected MediaItemModel(Parcel in) {
+        this.mID = in.readInt();
+        this.mTabID = in.readInt();
+        this.mIdentifier = (UUID) in.readSerializable();
+        this.mPicture = in.readParcelable(Uri.class.getClassLoader());
+        this.mThumbnail = in.readParcelable(Uri.class.getClassLoader());
+        this.mVideoPath = in.readParcelable(Uri.class.getClassLoader());
+        this.mTitle = in.readString();
+        this.mDirector = in.readString();
+        this.mActor = in.readString();
+        this.mContent = in.readString();
+        this.mInterestingCount = in.readInt();
+    }
+
+    public static final Creator<MediaItemModel> CREATOR = new Creator<MediaItemModel>() {
+        @Override
+        public MediaItemModel createFromParcel(Parcel source) {
+            return new MediaItemModel(source);
+        }
+
+        @Override
+        public MediaItemModel[] newArray(int size) {
+            return new MediaItemModel[size];
+        }
+    };
 }

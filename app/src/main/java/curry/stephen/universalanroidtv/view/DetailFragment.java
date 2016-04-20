@@ -26,7 +26,7 @@ public class DetailFragment extends Fragment {
 
     public static DetailFragment newInstance(MediaItemModel mediaItemModel) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(DETAIL_FRAGMENT_MEDIA_ITEM_MODEL, mediaItemModel);
+        bundle.putParcelable(DETAIL_FRAGMENT_MEDIA_ITEM_MODEL, mediaItemModel);
 
         DetailFragment detailFragment = new DetailFragment();
         detailFragment.setArguments(bundle);
@@ -39,7 +39,7 @@ public class DetailFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        MediaItemModel mediaItemModel = (MediaItemModel) getArguments().getSerializable(
+        MediaItemModel mediaItemModel = getArguments().getParcelable(
                 DETAIL_FRAGMENT_MEDIA_ITEM_MODEL);
 
         ImageView imageViewLogo = (ImageView) view.findViewById(R.id.image_view_logo);

@@ -11,7 +11,7 @@ public class DetailActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        MediaItemModel mediaItemModel = (MediaItemModel) getIntent().getExtras().getSerializable(
+        MediaItemModel mediaItemModel = (MediaItemModel) getIntent().getExtras().getParcelable(
                 DetailFragment.DETAIL_FRAGMENT_MEDIA_ITEM_MODEL);
 
         return DetailFragment.newInstance(mediaItemModel);

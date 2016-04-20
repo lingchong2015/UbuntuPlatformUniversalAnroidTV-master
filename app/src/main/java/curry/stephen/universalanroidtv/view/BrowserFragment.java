@@ -27,7 +27,7 @@ public class BrowserFragment extends Fragment {
     private GalleryAdapter mAdapter;//RecyclerView适配器.
     private int mIndex;
     private boolean mNeedToMoveInitPosition = false;
-    List<MediaItemModel> mMediaItemModelList;
+    ArrayList<MediaItemModel> mMediaItemModelList;
 
     public static final String MEDIA_ITEM_MODEL_LIST = "BrowserFragmentMediaItemModelList";
     private static final String TAG = BrowserFragment.class.getSimpleName();
@@ -46,7 +46,7 @@ public class BrowserFragment extends Fragment {
 
     public static BrowserFragment newInstance(ArrayList<MediaItemModel> mediaItemModelList) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(BrowserFragment.MEDIA_ITEM_MODEL_LIST, mediaItemModelList);
+        bundle.putParcelableArrayList(BrowserFragment.MEDIA_ITEM_MODEL_LIST, mediaItemModelList);
 
         BrowserFragment browserFragment = new BrowserFragment();
         browserFragment.setArguments(bundle);
@@ -57,7 +57,7 @@ public class BrowserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mMediaItemModelList = (List<MediaItemModel>) getArguments().getSerializable(MEDIA_ITEM_MODEL_LIST);
+        mMediaItemModelList = getArguments().getParcelableArrayList(MEDIA_ITEM_MODEL_LIST);
 
         View view = inflater.inflate(R.layout.fragment_browser, container, false);
 
@@ -78,7 +78,7 @@ public class BrowserFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(DetailFragment.DETAIL_FRAGMENT_MEDIA_ITEM_MODEL,
+                bundle.putParcelable(DetailFragment.DETAIL_FRAGMENT_MEDIA_ITEM_MODEL,
                         mMediaItemModelList.get(position));
                 intent.putExtras(bundle);
                 startActivity(intent);
