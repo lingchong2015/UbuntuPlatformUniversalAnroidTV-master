@@ -44,14 +44,17 @@ public class DetailFragment extends Fragment {
 
         ImageView imageViewLogo = (ImageView) view.findViewById(R.id.image_view_logo);
         ImageButton imageButtonPlay = (ImageButton) view.findViewById(R.id.image_button_play);
+        TextView textViewTV = (TextView) view.findViewById(R.id.text_view_tv);
         TextView textViewDirector = (TextView) view.findViewById(R.id.text_view_director);
         TextView textViewActor = (TextView) view.findViewById(R.id.text_view_actor);
         TextView textViewContent = (TextView) view.findViewById(R.id.text_view_content);
 
         try {
-            imageViewLogo.setImageDrawable(Drawable.createFromStream(
-                    getActivity().getContentResolver().openInputStream(
-                            mediaItemModel.getThumbnail()), null));
+            if (mediaItemModel.getThumbnail() != null) {
+                imageViewLogo.setImageDrawable(Drawable.createFromStream(
+                        getActivity().getContentResolver().openInputStream(
+                                mediaItemModel.getThumbnail()), null));
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -63,9 +66,21 @@ public class DetailFragment extends Fragment {
             }
         });
 
-        textViewDirector.setText(String.format("导演: %s", mediaItemModel.getDirector()));
-        textViewActor.setText(String.format("演员: %s", mediaItemModel.getActor()));
-        textViewContent.setText(String.format("内容简介: %s", mediaItemModel.getContent()));
+        if (mediaItemModel.getTitle() != null) {
+            textViewTV.setText(String.format("频道: %s", mediaItemModel.getTitle()));
+        }
+
+        if (mediaItemModel.getDirector() != null) {
+            textViewDirector.setText(String.format("导演: %s", mediaItemModel.getDirector()));
+        }
+
+        if (mediaItemModel.getActor() != null) {
+            textViewActor.setText(String.format("演员: %s", mediaItemModel.getActor()));
+        }
+
+        if (mediaItemModel.getContent() != null) {
+            textViewContent.setText(String.format("内容简介: %s", mediaItemModel.getContent()));
+        }
 
         return view;
     }

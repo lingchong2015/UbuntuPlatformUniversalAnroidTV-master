@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:focusable="false"
-        android:src="@drawable/hks_logo"
+        android:src="@drawable/none"
         app:layout_heightPercent="60%"
         app:layout_marginBottomPercent="0%"
         app:layout_marginLeftPercent="4%"
@@ -35,18 +35,34 @@
         app:layout_widthPercent="30%"/>
 
     <TextView
+        android:id="@+id/text_view_tv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_toRightOf="@id/image_view_logo"
+        android:text="频道: 无"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        app:layout_heightPercent="8%"
+        app:layout_marginBottomPercent="5%"
+        app:layout_marginLeftPercent="5%"
+        app:layout_marginRightPercent="1%"
+        app:layout_marginTopPercent="10%"
+        app:layout_widthPercent="100%"/>
+
+    <TextView
         android:id="@+id/text_view_director"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_toRightOf="@id/image_view_logo"
-        android:text="@string/detail_view_director"
+        android:layout_below="@id/text_view_tv"
+        android:text="导演: 无"
         android:textColor="#ffffff"
         android:textSize="30sp"
         app:layout_heightPercent="8%"
-        app:layout_marginBottomPercent="15%"
+        app:layout_marginBottomPercent="5%"
         app:layout_marginLeftPercent="5%"
         app:layout_marginRightPercent="1%"
-        app:layout_marginTopPercent="10%"
+        app:layout_marginTopPercent="5%"
         app:layout_widthPercent="100%"/>
 
     <TextView
@@ -55,14 +71,14 @@
         android:layout_height="0dp"
         android:layout_below="@id/text_view_director"
         android:layout_toRightOf="@id/image_view_logo"
-        android:text="@string/detail_view_actor"
+        android:text="演员: 无"
         android:textColor="#ffffff"
         android:textSize="30sp"
         app:layout_heightPercent="8%"
-        app:layout_marginBottomPercent="15%"
+        app:layout_marginBottomPercent="5%"
         app:layout_marginLeftPercent="5%"
         app:layout_marginRightPercent="1%"
-        app:layout_marginTopPercent="1%"
+        app:layout_marginTopPercent="5%"
         app:layout_widthPercent="100%"/>
 
     <TextView
@@ -71,15 +87,15 @@
         android:layout_height="0dp"
         android:layout_below="@id/text_view_actor"
         android:layout_toRightOf="@id/image_view_logo"
-        android:text="@string/detail_view_content"
+        android:text="内容简介: 无"
         android:textColor="#ffffff"
         android:textSize="30sp"
-        android:lineSpacingMultiplier="1.2"
+        android:lineSpacingMultiplier="1.1"
         app:layout_heightPercent="30%"
         app:layout_marginBottomPercent="1%"
         app:layout_marginLeftPercent="5%"
         app:layout_marginRightPercent="1%"
-        app:layout_marginTopPercent="1%"
+        app:layout_marginTopPercent="5%"
         app:layout_widthPercent="100%"/>
 
     <ImageView
@@ -92,7 +108,7 @@
         app:layout_marginBottomPercent="10%"
         app:layout_marginLeftPercent="5%"
         app:layout_marginRightPercent="1%"
-        app:layout_marginTopPercent="5%"
+        app:layout_marginTopPercent="1%"
         app:layout_widthPercent="58%"/>
 
 </android.support.percent.PercentRelativeLayout>

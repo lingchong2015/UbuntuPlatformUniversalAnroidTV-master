@@ -211,6 +211,7 @@ public class MainActivity extends FragmentActivity {
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_hk))
                 .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .title("香港卫视")
                 .director("香港卫视国际传媒集团")
                 .actor("高洪星 薛建华 张海勇等")
                 .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
@@ -223,6 +224,7 @@ public class MainActivity extends FragmentActivity {
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_y1))
                 .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .title("香港卫视")
                 .director("香港卫视国际传媒集团")
                 .actor("高洪星 薛建华 张海勇等")
                 .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
@@ -235,6 +237,7 @@ public class MainActivity extends FragmentActivity {
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_y2))
                 .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .title("香港卫视")
                 .director("香港卫视国际传媒集团")
                 .actor("高洪星 薛建华 张海勇等")
                 .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
@@ -247,6 +250,7 @@ public class MainActivity extends FragmentActivity {
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_y3))
                 .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .title("香港卫视")
                 .director("香港卫视国际传媒集团")
                 .actor("高洪星 薛建华 张海勇等")
                 .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
@@ -259,6 +263,7 @@ public class MainActivity extends FragmentActivity {
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_y4))
                 .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .title("香港卫视")
                 .director("香港卫视国际传媒集团")
                 .actor("高洪星 薛建华 张海勇等")
                 .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
@@ -278,6 +283,7 @@ public class MainActivity extends FragmentActivity {
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_hk))
                 .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .title("香港卫视")
                 .director("香港卫视国际传媒集团")
                 .actor("高洪星 薛建华 张海勇等")
                 .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
@@ -295,6 +301,7 @@ public class MainActivity extends FragmentActivity {
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_y1))
                 .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .title("香港卫视")
                 .director("香港卫视国际传媒集团")
                 .actor("高洪星 薛建华 张海勇等")
                 .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
@@ -307,6 +314,7 @@ public class MainActivity extends FragmentActivity {
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_y2))
                 .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .title("香港卫视")
                 .director("香港卫视国际传媒集团")
                 .actor("高洪星 薛建华 张海勇等")
                 .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
