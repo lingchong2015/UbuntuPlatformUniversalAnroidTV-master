@@ -210,6 +210,11 @@ public class MainActivity extends FragmentActivity {
                 .tabID(0)
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_hk))
+                .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .director("香港卫视国际传媒集团")
+                .actor("高洪星 薛建华 张海勇等")
+                .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
+                        "播...内容简介：香港卫视于2008年12月19日在香港完成香港...")
                 .build();
 
         MediaItemModel mediaItemModel2 = new MediaItemModel.Builder()
@@ -217,6 +222,11 @@ public class MainActivity extends FragmentActivity {
                 .tabID(0)
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_y1))
+                .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .director("香港卫视国际传媒集团")
+                .actor("高洪星 薛建华 张海勇等")
+                .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
+                        "播...内容简介：香港卫视于2008年12月19日在香港完成香港...")
                 .build();
 
         MediaItemModel mediaItemModel3 = new MediaItemModel.Builder()
@@ -224,6 +234,11 @@ public class MainActivity extends FragmentActivity {
                 .tabID(0)
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_y2))
+                .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .director("香港卫视国际传媒集团")
+                .actor("高洪星 薛建华 张海勇等")
+                .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
+                        "播...内容简介：香港卫视于2008年12月19日在香港完成香港...")
                 .build();
 
         MediaItemModel mediaItemModel4 = new MediaItemModel.Builder()
@@ -231,6 +246,11 @@ public class MainActivity extends FragmentActivity {
                 .tabID(0)
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_y3))
+                .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .director("香港卫视国际传媒集团")
+                .actor("高洪星 薛建华 张海勇等")
+                .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
+                        "播...内容简介：香港卫视于2008年12月19日在香港完成香港...")
                 .build();
 
         MediaItemModel mediaItemModel5 = new MediaItemModel.Builder()
@@ -238,6 +258,11 @@ public class MainActivity extends FragmentActivity {
                 .tabID(0)
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_y4))
+                .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .director("香港卫视国际传媒集团")
+                .actor("高洪星 薛建华 张海勇等")
+                .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
+                        "播...内容简介：香港卫视于2008年12月19日在香港完成香港...")
                 .build();
 
         List<MediaItemModel> mediaItemModelList1 = new ArrayList<>();
@@ -252,13 +277,28 @@ public class MainActivity extends FragmentActivity {
                 .tabID(1)
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_hk))
+                .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .director("香港卫视国际传媒集团")
+                .actor("高洪星 薛建华 张海勇等")
+                .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
+                        "播...内容简介：香港卫视于2008年12月19日在香港完成香港...")
                 .build();
 
         MediaItemModel mediaItemModel7 = new MediaItemModel.Builder()
+                .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .director("香港卫视国际传媒集团")
+                .actor("高洪星 薛建华 张海勇等")
+                .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
+                        "播...内容简介：香港卫视于2008年12月19日在香港完成香港...")
                 .id(1)
                 .tabID(1)
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_y1))
+                .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .director("香港卫视国际传媒集团")
+                .actor("高洪星 薛建华 张海勇等")
+                .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
+                        "播...内容简介：香港卫视于2008年12月19日在香港完成香港...")
                 .build();
 
         MediaItemModel mediaItemModel8 = new MediaItemModel.Builder()
@@ -266,6 +306,11 @@ public class MainActivity extends FragmentActivity {
                 .tabID(1)
                 .identifier(UUID.randomUUID())
                 .picture(getLocalDrawableUri(R.mipmap.wlds_y2))
+                .thumbnail(getLocalDrawableUri(R.drawable.hks_logo))
+                .director("香港卫视国际传媒集团")
+                .actor("高洪星 薛建华 张海勇等")
+                .content("香港卫视于2008年12月19日在香港完成香港卫视国际传媒集团的商业注册，2010年9月初试" +
+                        "播...内容简介：香港卫视于2008年12月19日在香港完成香港...")
                 .build();
 
         List<MediaItemModel> mediaItemModelList2 = new ArrayList<>();

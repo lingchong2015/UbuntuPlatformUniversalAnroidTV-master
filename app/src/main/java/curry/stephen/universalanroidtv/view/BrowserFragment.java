@@ -77,8 +77,10 @@ public class BrowserFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra(DetailFragment.DETAIL_FRAGMENT_MEDIA_ITEM_MODEL,
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(DetailFragment.DETAIL_FRAGMENT_MEDIA_ITEM_MODEL,
                         mMediaItemModelList.get(position));
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
 

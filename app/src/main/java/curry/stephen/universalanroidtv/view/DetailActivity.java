@@ -1,8 +1,5 @@
 package curry.stephen.universalanroidtv.view;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import curry.stephen.universalanroidtv.model.MediaItemModel;
@@ -12,14 +9,11 @@ import curry.stephen.universalanroidtv.model.MediaItemModel;
  */
 public class DetailActivity extends SingleFragmentActivity {
 
-    private MediaItemModel mMediaItemModel;
-
     @Override
     protected Fragment createFragment() {
-        Intent intent = getIntent();
-        mMediaItemModel = (MediaItemModel) intent.getExtras().getSerializable(
+        MediaItemModel mediaItemModel = (MediaItemModel) getIntent().getExtras().getSerializable(
                 DetailFragment.DETAIL_FRAGMENT_MEDIA_ITEM_MODEL);
 
-        return DetailFragment.newInstance(mMediaItemModel);
+        return DetailFragment.newInstance(mediaItemModel);
     }
 }

@@ -124,7 +124,8 @@ public class MediaItemModel implements Serializable {
         mInterestingCount = interestingCount;
     }
 
-    public static class Builder {
+
+    public static class Builder implements Serializable {
 
         private int mID;
         private int mTabID;

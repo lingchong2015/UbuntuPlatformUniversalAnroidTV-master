@@ -55,7 +55,7 @@ public class TabDataModel implements Serializable {
         mMediaItemModelList = mediaItemModelList;
     }
 
-    public static class Builder {
+    public static class Builder implements Serializable {
 
         private int mID;
         private Uri mPictureNormal;
